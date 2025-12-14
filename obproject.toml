@@ -1,5 +1,5 @@
 platform = 'merced.obp.outerbounds.com'
-project = 'ob_project_starter'
+project = 'starter'
 title = 'XKCD Explainer'
 
 [dev-assets]
