@@ -1,0 +1,1 @@
+{"937cec580ae017586875221b8fc93351": {"success": {"bakingStats": null, "containerImage": "fast-bakery.merced.obp.outerbounds.com/default/tranquil-meerkat:ohxvs964ws-oci-zstd", "metadata": {"coordinatorImageTag": "v1.19.0-3688bfda-1763473797"}, "pythonPath": "/opt/outerbounds/fastbakery/bin/python"}}}

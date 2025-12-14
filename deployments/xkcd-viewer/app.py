@@ -72,7 +72,10 @@ def load_valid_comic(comic_id: int):
 
 # ---------- UI State ----------
 
-START_ID = int(fetch_latest()[0])
+try:
+    START_ID = int(fetch_latest()[0])
+except Exception:
+    START_ID = 2000  # Fallback to a reasonable comic ID if fetch fails
 if "comic_id" not in st.session_state:
     st.session_state.comic_id = START_ID
 
@@ -111,6 +114,8 @@ else:
 
 if mid.button("Trigger analysis", type="primary", use_container_width=True):
     ProjectEvent(
-        "explain", project=os.environ["OB_PROJECT"], branch=os.environ["OB_BRANCH"]
+        "explain",
+        project=os.environ.get("OB_PROJECT", "starter"),
+        branch=os.environ.get("OB_BRANCH", "main")
     ).publish({"xkcd_url": img_url})
     st.success(f"XKCDExplainer triggered for {st.session_state.comic_id}")
