@@ -2,6 +2,14 @@ name: xkcd-viewer
 port: 8000
 description: View XKCD comics
 
+resources:
+  cpu: "2"              # CPU cores
+  memory: "8Gi"         # Memory (use Mi or Gi units)
+  gpu: "0"              # Number of GPUs
+  disk: "100Gi"         # Persistent storage
+  shared_memory: "2Gi"  # Shared memory (useful for vLLM, Ray, etc.)
+
+
 replicas:
   min: 1
   max: 1
