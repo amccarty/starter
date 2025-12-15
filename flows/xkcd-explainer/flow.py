@@ -9,6 +9,7 @@ from metaflow import (
     trigger_on_finish,
     profile,
     Flow,
+    kubernetes,
 )
 from metaflow.cards import Markdown as MD, Image
 from obproject import ProjectFlow, project_trigger, highlight
@@ -37,7 +38,7 @@ def prompt(img_url):
         model = AutoModelForVision2Seq.from_pretrained(
             MODEL,
             torch_dtype=torch.bfloat16,
-            _attn_implementation="flash_attention_2" if DEVICE == "cuda" else "eager",
+            _attn_implementation="eager",  # Use eager instead of flash_attention_2 (no flash-attn package)
         ).to(DEVICE)
 
     # Create input messages
@@ -79,11 +80,12 @@ class XKCDExplainer(ProjectFlow):
             self.img_url = self.prj.get_data("xkcd")
             print(f"Using an image from the latest data asset, {self.img_url}")
 
-        print(self.prj.asset.consume_model_asset("explainer-vlm"))
+        # print(self.prj.asset.consume_model_asset("explainer-vlm"))
         self.next(self.prompt_vlm)
 
     # ⬇️ add gpu=1 to @resources if you have GPU compute pools configured
-    @resources(cpu=4, memory=16000)
+    @resources(cpu=4, memory=16000, gpu=1)
+    @kubernetes(compute_pool="obp-h100-1gpu")
     @card(type="blank", id="model", refresh_interval=2)
     @pypi(
         python="3.11.11",
