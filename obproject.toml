@@ -3,4 +3,4 @@ project = 'starter'
 title = 'XKCD Explainer'
 
 [dev-assets]
-branch = 'dev'
+branch = 'main'
