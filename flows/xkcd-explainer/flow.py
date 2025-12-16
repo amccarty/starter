@@ -4,6 +4,7 @@ from metaflow import (
     step,
     current,
     resources,
+    gpu_profile,
     pypi,
     Parameter,
     trigger_on_finish,
@@ -87,6 +88,7 @@ class XKCDExplainer(ProjectFlow):
     @resources(cpu=4, memory=16000, gpu=1)
     @kubernetes(compute_pool="obp-h100-1gpu")
     @card(type="blank", id="model", refresh_interval=2)
+    @gpu_profile(interval=1)
     @pypi(
         python="3.11.11",
         packages={"transformers": "4.55.2", "torch": "2.8.0", "pillow": "11.3.0"},
